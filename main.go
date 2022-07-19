@@ -85,3 +85,23 @@ func (tree *segmentTree) build(arr []int, index, left, right int) {
 		tree.data[index] = merge(tree.data[index*2], tree.data[index*2+1])
 	}
 }
+
+func (tree *segmentTree) Update(x, y int) {
+	tree.update(1, 1, tree.n, x, y)
+}
+
+func (tree *segmentTree) update(index, left, right, updateIndex, updateValue int) {
+	if left > right || left > updateIndex || right < updateValue {
+		return
+	}
+	if left == right {
+		tree.data[index] = createData(updateValue)
+	}
+	if left < right {
+		middle := (left + right) / 2
+
+		tree.update(index*2, left, middle, updateIndex, updateValue)
+		tree.update(index*2+1, middle+1, right, updateIndex, updateValue)
+		tree.data[index] = merge(tree.data[index*2], tree.data[index*2+1])
+	}
+}
