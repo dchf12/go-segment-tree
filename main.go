@@ -105,3 +105,26 @@ func (tree *segmentTree) update(index, left, right, updateIndex, updateValue int
 		tree.data[index] = merge(tree.data[index*2], tree.data[index*2+1])
 	}
 }
+
+func (tree *segmentTree) Find(x, y int) int {
+	return tree.find(1, 1, tree.n, x, y).best
+}
+
+func (tree *segmentTree) find(index int, left int, right int, findLeft int, findRight int) segmentTreeData {
+	if left == findLeft && right == findRight {
+		return tree.data[index]
+	} else {
+		middle := (left + right) / 2
+
+		if findRight <= middle {
+			return tree.find(index*2, left, middle, findLeft, findRight)
+		} else if findLeft > middle {
+			return tree.find(index*2+1, middle+1, right, findLeft, findRight)
+		} else {
+			leftResult := tree.find(index*2, left, middle, findLeft, min(middle, findRight))
+			rightResult := tree.find(index*2+1, middle+1, right, max(findLeft, middle+1), findRight)
+			mergedResult := merge(leftResult, rightResult)
+			return mergedResult
+		}
+	}
+}
