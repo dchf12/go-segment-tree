@@ -1,7 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strconv"
+	"strings"
 )
 
 type segmentTreeData struct {
@@ -13,6 +17,25 @@ type segmentTreeData struct {
 type segmentTree struct {
 	n    int
 	data []segmentTreeData
+}
+
+func max(n ...int) int {
+	var m int
+	for _, v := range n {
+		if v > m {
+			m = v
+		}
+	}
+	return m
+}
+func min(n ...int) int {
+	m := 9999999999
+	for _, v := range n {
+		if v < m {
+			m = v
+		}
+	}
+	return m
 }
 
 func main() {
@@ -47,16 +70,6 @@ func merge(left, right segmentTreeData) segmentTreeData {
 		best,
 		total,
 	}
-}
-
-func max(n ...int) int {
-	var m int
-	for _, v := range n {
-		if v > m {
-			m = v
-		}
-	}
-	return m
 }
 
 func Build(arr []int) *segmentTree {
@@ -127,4 +140,42 @@ func (tree *segmentTree) find(index int, left int, right int, findLeft int, find
 			return mergedResult
 		}
 	}
+}
+
+var reader *bufio.Reader = bufio.NewReader(os.Stdin)
+var writer *bufio.Writer = bufio.NewWriter(os.Stdout)
+
+func readInt() int {
+	var value int
+	fmt.Fscanf(reader, "%d\n", &value)
+
+	return value
+}
+
+func writeInt(value int) {
+	fmt.Fprintln(writer, value)
+}
+
+func readArray(n int) []int {
+	line, err := reader.ReadString('\n')
+	if err != nil {
+		panic(err)
+	}
+
+	stringArray := strings.Split(strings.TrimSpace(line), " ")
+	if len(stringArray) != n {
+		panic(fmt.Errorf("Expected input array to be of size %d, but was %d", n, len(stringArray)))
+	}
+
+	arr := make([]int, n)
+	for i := 0; i < n; i++ {
+		value, err := strconv.Atoi(stringArray[i])
+		if err != nil {
+			panic(err)
+		}
+
+		arr[i] = value
+	}
+
+	return arr
 }
