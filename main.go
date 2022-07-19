@@ -32,9 +32,9 @@ func createTree(v int) segmentTreeData {
 
 func merge(left, right segmentTreeData) segmentTreeData {
 	total := left.total + right.total
-	prefix := Max(left.prefix, left.total+right.prefix)
-	suffix := Max(right.suffix, right.total+left.suffix)
-	best := Max(
+	prefix := max(left.prefix, left.total+right.prefix)
+	suffix := max(right.suffix, right.total+left.suffix)
+	best := max(
 		left.best,
 		right.best,
 		prefix,
@@ -49,16 +49,12 @@ func merge(left, right segmentTreeData) segmentTreeData {
 	}
 }
 
-func max(l, r int) int {
-	if l > r {
-		return l
-	}
-	return r
-}
-func Max(n ...int) int {
+func max(n ...int) int {
 	var m int
 	for _, v := range n {
-		m = max(m, v)
+		if v > m {
+			m = v
+		}
 	}
 	return m
 }
