@@ -158,7 +158,7 @@ func readArray(n int) []int {
 
 	stringArray := strings.Split(strings.TrimSpace(line), " ")
 	if len(stringArray) != n {
-		panic(fmt.Errorf("Expected input array to be of size %d, but was %d", n, len(stringArray)))
+		panic(fmt.Errorf("expected input array to be of size %d, but was %d", n, len(stringArray)))
 	}
 
 	arr := make([]int, n)
