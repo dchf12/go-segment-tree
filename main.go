@@ -38,12 +38,6 @@ func min(n ...int) int {
 	return m
 }
 
-func main() {
-	s := createData(1)
-	fmt.Printf("%v", s)
-	fmt.Printf("%v", merge(s, s))
-
-}
 func createData(v int) segmentTreeData {
 	return segmentTreeData{
 		prefix: v,
@@ -178,4 +172,27 @@ func readArray(n int) []int {
 	}
 
 	return arr
+}
+
+func main() {
+	defer writer.Flush()
+
+	n := readInt()
+	arr := readArray(n)
+	tree := Build(arr)
+
+	m := readInt()
+	for i := 0; i < m; i++ {
+		query := readArray(3)
+		t := query[0]
+		x := query[1]
+		y := query[2]
+
+		if t == 0 {
+			tree.Update(x, y)
+		} else {
+			value := tree.Find(x, y)
+			writeInt(value)
+		}
+	}
 }
