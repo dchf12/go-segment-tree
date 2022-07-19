@@ -58,3 +58,30 @@ func max(n ...int) int {
 	}
 	return m
 }
+
+func Build(arr []int) *segmentTree {
+	n := len(arr)
+	length := n * 4
+	data := make([]segmentTreeData, length)
+	tree := &segmentTree{
+		n,
+		data,
+	}
+	tree.build(arr, 1, 1, n)
+	return tree
+}
+
+func (tree *segmentTree) build(arr []int, index, left, right int) {
+	if left > right {
+		return
+	}
+	if left == right {
+		tree.data[index] = createData(arr[left-1])
+	}
+	if left < right {
+		middle := (left + right) / 2
+		tree.build(arr, index*2, left, middle)
+		tree.build(arr, index*2+1, middle+1, right)
+		tree.data[index] = merge(tree.data[index*2], tree.data[index*2+1])
+	}
+}
