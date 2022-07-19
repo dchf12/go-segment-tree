@@ -16,12 +16,12 @@ type segmentTree struct {
 }
 
 func main() {
-	s := createTree(1)
+	s := createData(1)
 	fmt.Printf("%v", s)
 	fmt.Printf("%v", merge(s, s))
 
 }
-func createTree(v int) segmentTreeData {
+func createData(v int) segmentTreeData {
 	return segmentTreeData{
 		prefix: v,
 		suffix: v,
